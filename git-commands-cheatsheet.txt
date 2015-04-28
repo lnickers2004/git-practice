@@ -1,0 +1,158 @@
+
+USEFUL GIT COMMANDS:
+
+CLONING A REPO:
+
+	git clone http://github.com/lnickers2004/git-practice.git
+
+CHECKING THE HISTORY OF COMMITS:
+	git log
+	git log --oneline
+
+CHECKING STATUS OF CURRENT BRANCH:
+
+	git status
+
+CREATING BRANCHES:
+
+	git checkout -b new-feature-branch
+	git branch another-new-branch
+
+
+LISTING BRANCHES:
+
+	git branch
+
+SWITCHING TO A BRANCH:
+
+	git checkout master
+
+STAGING FILES:
+
+	git add .
+	git add -A
+
+COMMITTING FILES:
+
+	git commit -m “commit msg”
+
+MERGING BRANCHES:
+
+	git checkout master
+	git merge feature-branch
+
+PUBLISHING CHANGES TO A REMOTE:
+
+	git push
+	git push origin master
+
+VIEWING REMOTES:
+
+	git remote -v
+
+ADDING REMOTES:
+
+	git remote add
+
+
+REBASING:
+
+	git checkout feature-branch
+	git rebase master
+	git checkout master
+	git merge feature-branch
+
+======================================================================
+
+WORKING WITH FORKS OF UPSTREAM REPOS:
+	STEP:
+		1) use github to FORK the desired repo into a 2nd user’s account (nickarthur)
+
+		2) on the 2nd user’s machine clone the repo
+
+			git clone http://github.com/nickarthur/git-practice.git
+
+		3) on the 2nd user’s machine(nickarthur) add an upstream remote to the 1st user’s repo
+
+			git remote add upstream http://github.com/lnickers2004/git-practice.git
+
+		4) verify the upstream remotes are created
+
+			git remote -v
+
+		5) create and checkout a new feature branch
+
+			git checkout -b new-feature-branch
+
+		6) make changes on new feature branch code files…
+
+			git add -A
+			git commit -m “changes for new-feature-branch”
+
+		*7) *** push all local branches and their commits to github and setup up UPSTREAM TRACKING ***
+
+			git push —-all -u
+
+
+		8) open the 2nd user’s repo on git hub and create the PULL REQUEST
+
+
+NOW IMAGINE THE UPSTREAM REPO CHANGES BEFORE THE TEAM LEAD CAN PULL IN YOUR CHANGES, then automatic merging won’t be possible
+and the witll ask you to REBASE your feature branch to the new state of UPSTREAM/MASTER  SO HERE’s HOW:
+
+
+	 	9) on the 2nd user’s machine switch back to master branch
+
+			git checkout master
+
+		*10)  *** REBASE YOUR MASTER BRANCH TO THE UPSTREAM MASTER BRANCH ***
+
+			git pull —-rebase upstream master
+
+		11) check the logs on both machines ( or compare github commits of the upstream repo’s master branch ) to your local master branch— they should now have identical commits
+			git log —oneline
+
+		12) SWITCH BACK TO THE 	new-feature-branch
+
+			git checkout new-feature-branch
+
+		13) rebase the new feature branch to the local master branch which you have just updated
+
+			git rebase master
+
+
+		14) handle any merge conflicts by editing and saving the files that had conflicts and stage the fixed files
+
+			git add -A
+
+		15) continue the rebase
+
+			git rebase —continue
+
+		16) need to force push the changes up to github now, because history was rewritten and commits changed
+
+			git push —force
+
+		17) verify the pull request is automatically updated on github and shows that automatic merge is possible again
+
+		18) enter a message in git hub to the code reviewer telling them that you have rebased the code and to please consider the changes
+
+		19) the upstream repo manager will then merge the pull request with a new commit and commit message
+
+		20) on the 2nd user’s machine, now lets get out master in sync with the upstream master
+
+			git checkout master
+			git pull —-rebase upstream master
+
+		21) finally push local master to 2nd user’s repo
+
+			git push master
+
+
+
+
+
+
+
+
+
